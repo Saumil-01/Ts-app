@@ -1,0 +1,9 @@
+/* .table tbody tr.highlight-row {
+    background-color: red !important;
+} 
+*/
+.table tbody tr.highlight-row td {
+    background-color: red !important;  
+    color: white;
+}
+/*Ensures individual cells are colored 

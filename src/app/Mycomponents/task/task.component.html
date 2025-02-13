@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row p-2 bg-dark text-primary">
+        <div class="col-6 ">
+            <h3>Task List</h3>
+        </div>
+        <div class="col-6 text-end">
+            <button class=" btn btn-warning" (click)="openModal()"> Add Task</button>&nbsp;
+            <button class="btn btn-secondary" (click)="sortTasks()">Sort</button>
+        </div>
+    </div>
+    <br>    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Sr. No.</td>
+                <td>Task</td>
+                <td>Start Date</td>
+                <td>End Date</td>
+                <td>Status</td>
+                <td class="text-center">Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of taskList; let i = index" [ngClass]="{'highlight-row': i < 5}">
+                <td>{{ i + 1 }}</td>
+                <td>{{ task.taskName }}</td>
+                <td>{{ task.startTime | date:'short'}}</td>
+                <td>{{ task.endTime  | date:'short' }}</td>
+                <td>{{ task.completed }}</td>
+                <td class="text-center">
+                    <!-- <button class="btn btn-primary">Edit</button> ||  -->
+                    <button class="btn btn-danger" (click)="onDelete(task.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header bg-primary">
+          <h4 class="modal-title">Add Tasks</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetForm(taskForm)"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <form #taskForm="ngForm" (ngSubmit)="submitForm()">            
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-12">
+                <label for="task">Task Name</label>
+                <input type="text" name="taskname" placeholder="Designing a page" class="form-control" id="task" required  [(ngModel)]="task.taskName" #taskname="ngModel">
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+                <label for="sdt">Start Date&Time</label>
+                <input type="datetime-local" name="startdate" placeholder="Start Date&Time" class="form-control" id="sdt" required [(ngModel)]="task.startTime" #startTime="ngModel">
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+                <label for="edt">End Date&Time</label>
+                <input type="datetime-local" name="enddate" placeholder="End Date&Time" class="form-control" id="edt" required  [(ngModel)]="task.endTime">
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+                <label for="tskcpt">Status Completed</label>
+                <select name="tskcpt" id="tskcpt" class="form-control" required [(ngModel)]="task.completed">
+                    <option value="" disabled selected>--Select Status--</option>
+                    <option value="Yes">Yes</option>
+                    <option value="Pending">Pending</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+         </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" [disabled]="taskForm.invalid" data-bs-dismiss="modal" (click)="submitForm()">Save</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+        </div>
+        
+    </form>
+    </div>
+    </div>
+  
